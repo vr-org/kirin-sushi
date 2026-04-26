@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirin Sushi — Vila Nova de Gaia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+:root {
+  --gold: #C4A24A;
+  --gold-light: #DFC070;
+  --black: #070707;
+  --dark: #0E0E0E;
+  --panel: #121212;
+  --line: rgba(196,162,74,0.15);
+  --text: #EAE2D0;
+  --muted: #7A7060;
+  --ff-title: 'Cinzel', serif;
+  --ff-body: 'Cormorant Garamond', serif;
+}
+
+body { background:var(--black); color:var(--text); font-family:var(--ff-body); overflow-x:hidden; }
+
+/* ─── NAV ─── */
+#nav {
+  position:fixed; inset:0 0 auto; z-index:800;
+  padding:24px 48px;
+  display:flex; align-items:center; justify-content:space-between;
+  transition:background .5s, padding .3s, border .5s;
+  border-bottom:1px solid transparent;
+  flex-wrap:nowrap; gap:24px;
+}
+#nav.s {
+  background:rgba(7,7,7,.95);
+  backdrop-filter:blur(18px);
+  padding:15px 28px;
+  border-bottom-color:var(--line);
+}
+.n-logo {
+  text-decoration:none;
+}
+.n-logo-name {
+  display:block; font-family:var(--ff-title);
+  font-size:.95rem; letter-spacing:.26em; color:var(--gold);
+  text-shadow:0 1px 12px rgba(0,0,0,.9);
+}
+.n-logo-loc {
+  display:block; font-family:var(--ff-title);
+  font-size:.38rem; letter-spacing:.45em; color:rgba(234,226,208,.75);
+  margin-top:3px; text-shadow:0 1px 8px rgba(0,0,0,.9);
+}
+.n-links {
+  display:none; list-style:none; gap:40px;
+}
+.n-links a {
+  font-family:var(--ff-title); font-size:.52rem;
+  letter-spacing:.32em; color:rgba(234,226,208,.88);
+  text-decoration:none; text-transform:uppercase;
+  transition:color .3s; text-shadow:0 1px 10px rgba(0,0,0,.9);
+}
+.n-links a:hover { color:var(--gold); }
+
+
+
+/* ─── HERO ─── */
+.hero {
+  position:relative; width:100%; height:100svh; min-height:600px;
+  display:flex; align-items:flex-end; justify-content:flex-start;
+  overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background-image:url("images/hero.png");
+  background-size:cover; background-position:center 35%;
+}
+.hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(105deg, rgba(7,7,7,.72) 0%, rgba(7,7,7,.35) 55%, rgba(7,7,7,.15) 100%),
+             linear-gradient(180deg, rgba(7,7,7,.3) 0%, transparent 30%, rgba(7,7,7,.8) 100%);
+}
+.hero-content {
+  position:relative; z-index:2;
+  padding:0 28px 72px;
+  max-width:640px;
+  animation:up 1.4s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes up { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:none} }
+.hero-tag {
+  font-family:var(--ff-title); font-size:.48rem;
+  letter-spacing:.5em; color:var(--gold);
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:20px;
+}
+.hero-tag::before { content:''; width:28px; height:1px; background:var(--gold); opacity:.6; }
+.hero-h1 {
+  font-family:var(--ff-title);
+  font-size:clamp(3rem, 11vw, 7.5rem);
+  font-weight:400; letter-spacing:.06em; line-height:.95;
+  color:var(--text);
+}
+.hero-h1 span { color:var(--gold); display:block; }
+.hero-tagline {
+  font-family:var(--ff-body); font-style:italic;
+  font-size:clamp(1rem, 2.5vw, 1.35rem); font-weight:300;
+  color:rgba(234,226,208,.65); margin-top:18px; letter-spacing:.04em;
+}
+.hero-rule { width:40px; height:1px; background:var(--gold); opacity:.5; margin:28px 0; }
+.hero-actions { display:flex; flex-direction:column; gap:12px; }
+.btn-fill {
+  font-family:var(--ff-title); font-size:.52rem; letter-spacing:.22em;
+  color:var(--black); background:var(--gold);
+  padding:16px 32px; text-decoration:none; text-align:center;
+  transition:background .3s; display:inline-block;
+}
+.btn-fill:hover { background:var(--gold-light); }
+.btn-ghost {
+  font-family:var(--ff-title); font-size:.52rem; letter-spacing:.22em;
+  color:var(--gold); border:1px solid rgba(196,162,74,.4);
+  padding:16px 32px; text-decoration:none; text-align:center;
+  transition:border-color .3s, background .3s; display:inline-block;
+}
+.btn-ghost:hover { border-color:var(--gold); background:rgba(196,162,74,.06); }
+.hero-scroll {
+  position:absolute; bottom:28px; right:28px; z-index:2;
+  writing-mode:vertical-rl; font-family:var(--ff-title);
+  font-size:.4rem; letter-spacing:.45em; color:rgba(196,162,74,.5);
+  display:flex; align-items:center; gap:12px;
+  animation:fadeIn 3s 2s both;
+}
+.hero-scroll::after {
+  content:''; width:1px; height:40px;
+  background:linear-gradient(var(--gold), transparent);
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* ─── MARQUEE ─── */
+.marquee { background:var(--gold); padding:11px 0; overflow:hidden; white-space:nowrap; }
+.marquee-t {
+  display:inline-flex;
+  animation:mar 22s linear infinite;
+}
+.m-item {
+  font-family:var(--ff-title); font-size:.5rem;
+  letter-spacing:.32em; color:var(--black);
+  padding:0 28px;
+}
+.m-dot { color:rgba(7,7,7,.35); }
+@keyframes mar { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ─── SHARED ─── */
+.tag {
+  font-family:var(--ff-title); font-size:.48rem;
+  letter-spacing:.5em; color:var(--gold);
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:14px; text-transform:uppercase;
+}
+.tag::after { content:''; width:28px; height:1px; background:var(--gold); opacity:.5; }
+.h2 {
+  font-family:var(--ff-title);
+  font-size:clamp(1.65rem, 4.5vw, 3rem);
+  font-weight:400; line-height:1.15; color:var(--text);
+  margin-bottom:22px;
+}
+.h2 em {
+  font-family:var(--ff-body); font-style:italic;
+  color:var(--gold); font-size:1.12em;
+}
+.body-text {
+  font-family:var(--ff-body); font-size:1.05rem;
+  font-weight:300; line-height:1.9; color:var(--muted);
+  margin-bottom:18px;
+}
+.reveal {
+  opacity:0; transform:translateY(28px);
+  transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+}
+.reveal.on { opacity:1; transform:none; }
+.d1 { transition-delay:.1s; }
+.d2 { transition-delay:.2s; }
+.d3 { transition-delay:.3s; }
+.d4 { transition-delay:.4s; }
+
+/* ─── INTRO / ABOUT ─── */
+.intro { padding:90px 28px; max-width:1280px; margin:0 auto; }
+.intro-img {
+  width:100%; aspect-ratio:3/2; object-fit:cover;
+  object-position:center 40%;
+  filter:brightness(.82) saturate(.9);
+  margin-bottom:56px;
+}
+.intro-cols {
+  display:grid; grid-template-columns:1fr; gap:48px;
+}
+.intro-rule {
+  width:1px; background:var(--line);
+  display:none;
+}
+.divider-line {
+  width:100%; height:1px; background:var(--line);
+  margin:48px 0;
+}
+
+/* ─── GALLERY — full bleed grid ─── */
+.gallery {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto;
+  gap:3px;
+  background:var(--black);
+}
+.g-item {
+  position:relative; overflow:hidden;
+  background:var(--dark);
+}
+.g-item img {
+  width:100%; height:100%;
+  object-fit:cover; display:block;
+  transition:transform .7s cubic-bezier(.16,1,.3,1);
+  filter:brightness(.88) saturate(.92);
+}
+.g-item:hover img { transform:scale(1.05); }
+.g-tall { aspect-ratio:3/4; }
+.g-wide { aspect-ratio:4/3; }
+.g-sq   { aspect-ratio:1/1; }
+.g-label {
+  position:absolute; bottom:18px; left:20px;
+  font-family:var(--ff-body); font-style:italic;
+  font-size:.95rem; letter-spacing:.06em;
+  color:rgba(234,226,208,.75);
+  opacity:0; transform:translateY(6px);
+  transition:opacity .4s, transform .4s;
+  pointer-events:none;
+}
+.g-item:hover .g-label { opacity:1; transform:none; }
+
+/* ─── EXPERIENCE SECTION ─── */
+.exp-section {
+  padding:90px 28px;
+  max-width:1280px; margin:0 auto;
+}
+.exp-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:3px; margin-top:48px;
+}
+.exp-card {
+  background:var(--panel);
+  padding:36px 28px;
+  border-bottom:1px solid transparent;
+  transition:border-color .4s, background .3s;
+}
+.exp-card:hover {
+  border-bottom-color:var(--gold);
+  background:#171717;
+}
+.exp-card-num {
+  font-family:var(--ff-body); font-size:2rem;
+  font-weight:300; color:rgba(196,162,74,.25);
+  display:block; margin-bottom:14px; line-height:1;
+}
+.exp-card-title {
+  font-family:var(--ff-title); font-size:.6rem;
+  letter-spacing:.22em; color:var(--gold);
+  display:block; margin-bottom:10px; text-transform:uppercase;
+}
+.exp-card-body {
+  font-family:var(--ff-body); font-size:.95rem;
+  color:var(--muted); line-height:1.75;
+}
+
+/* ─── RODIZIO ─── */
+.rodizio-section {
+  background:var(--panel);
+  position:relative; overflow:hidden;
+}
+.rodizio-inner {
+  max-width:1280px; margin:0 auto;
+  padding:90px 28px;
+  display:grid; grid-template-columns:1fr; gap:56px;
+}
+.rodizio-img-wrap {
+  position:relative;
+}
+.rodizio-img {
+  width:100%; display:block;
+  object-fit:contain; object-position:top center;
+  filter:brightness(.88) saturate(.9);
+  height:auto;
+}
+.rodizio-img-caption {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:48px 28px 24px;
+  background:linear-gradient(transparent, rgba(7,7,7,.85));
+  font-family:var(--ff-body); font-style:italic;
+  font-size:1.1rem; color:rgba(234,226,208,.7);
+  letter-spacing:.04em;
+}
+.rodizio-features {
+  display:flex; flex-direction:column; gap:0;
+}
+.rf {
+  display:flex; align-items:baseline; gap:16px;
+  padding:18px 0; border-bottom:1px solid var(--line);
+}
+.rf:first-child { border-top:1px solid var(--line); }
+.rf-num {
+  font-family:var(--ff-body); font-size:1rem;
+  color:rgba(196,162,74,.4); min-width:24px;
+  line-height:1;
+}
+.rf-text {
+  font-family:var(--ff-body); font-size:1.05rem;
+  color:var(--muted); line-height:1.6;
+}
+.rf-text strong { color:var(--text); font-weight:400; }
+
+/* ─── HOURS / INFO ─── */
+.info-section {
+  padding:90px 28px;
+  max-width:1280px; margin:0 auto;
+}
+.hours-blocks {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:3px; margin-bottom:48px;
+}
+.hour-block {
+  background:var(--panel);
+  padding:28px 24px;
+  display:flex; flex-direction:column;
+  justify-content:space-between; gap:14px;
+}
+.hour-service {
+  font-family:var(--ff-body); font-weight:300;
+  font-size:1.5rem; color:var(--text);
+}
+.hour-days {
+  font-family:var(--ff-title); font-size:.42rem;
+  letter-spacing:.3em; color:var(--muted);
+  text-transform:uppercase;
+}
+.hour-time {
+  font-family:var(--ff-title); font-size:.62rem;
+  letter-spacing:.18em; color:var(--gold);
+}
+.contact-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:3px; margin-bottom:36px;
+}
+.c-card {
+  background:var(--panel); padding:22px 20px;
+  display:flex; align-items:flex-start; gap:14px;
+}
+.c-card-bar {
+  width:2px; min-height:36px; background:var(--gold);
+  opacity:.4; flex-shrink:0;
+}
+.c-label {
+  font-family:var(--ff-title); font-size:.42rem;
+  letter-spacing:.35em; color:var(--muted);
+  display:block; margin-bottom:5px; text-transform:uppercase;
+}
+.c-val {
+  font-family:var(--ff-body); font-size:1rem;
+  color:var(--text); font-weight:300; line-height:1.5;
+}
+.c-val a { color:var(--text); text-decoration:none; transition:color .3s; }
+.c-val a:hover { color:var(--gold); }
+.res-btn {
+  width:100%; display:flex; align-items:center; justify-content:space-between;
+  background:var(--gold); padding:22px 28px;
+  text-decoration:none; transition:background .3s;
+}
+.res-btn:hover { background:var(--gold-light); }
+.res-btn-left {}
+.res-btn-label {
+  font-family:var(--ff-title); font-size:.48rem;
+  letter-spacing:.3em; color:var(--black);
+  text-transform:uppercase; display:block;
+}
+.res-btn-num {
+  font-family:var(--ff-body); font-size:1.4rem;
+  font-weight:500; color:var(--black); display:block; margin-top:4px;
+}
+.res-btn-arrow {
+  font-size:1.6rem; color:var(--black); opacity:.5;
+}
+
+/* ─── MAP ─── */
+.map-section { background:var(--panel); }
+.map-wrap { height:320px; }
+.map-wrap iframe { width:100%; height:100%; border:none; }
+.map-info { padding:48px 28px; }
+.map-address {
+  font-family:var(--ff-body); font-size:1.05rem;
+  color:var(--muted); line-height:1.9; margin-bottom:24px; font-weight:300;
+}
+.dir-link {
+  font-family:var(--ff-title); font-size:.52rem;
+  letter-spacing:.28em; color:var(--gold); text-decoration:none;
+  display:inline-flex; align-items:center; gap:10px;
+  border-bottom:1px solid rgba(196,162,74,.3); padding-bottom:2px;
+  transition:gap .3s, border-color .3s;
+}
+.dir-link:hover { gap:16px; border-color:var(--gold); }
+
+/* ─── FOOTER ─── */
+footer {
+  background:var(--black);
+  border-top:1px solid var(--line);
+  padding:52px 28px 36px;
+}
+.f-top {
+  display:flex; justify-content:center; align-items:center;
+  margin-bottom:32px; padding-bottom:32px;
+  border-bottom:1px solid var(--line);
+}
+.f-wordmark {
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  text-align:center;
+}
+.f-wordmark-name {
+  font-family:var(--ff-title); font-size:1.4rem;
+  letter-spacing:0.35em; color:var(--gold); display:block;
+}
+.f-wordmark-rule {
+  display:block; width:40px; height:1px;
+  background:var(--line);
+}
+.f-wordmark-sub {
+  font-family:var(--ff-title); font-size:0.42rem;
+  letter-spacing:0.45em; color:var(--muted); display:block;
+}
+.f-social { display:flex; gap:10px; margin-bottom:28px; }
+.f-social a {
+  width:36px; height:36px; border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted); text-decoration:none; font-size:.9rem;
+  transition:border-color .3s, color .3s;
+}
+.f-social a:hover { border-color:var(--gold); color:var(--gold); }
+.f-nav { display:flex; flex-wrap:wrap; gap:18px 26px; margin-bottom:32px; }
+.f-nav a {
+  font-family:var(--ff-title); font-size:.46rem;
+  letter-spacing:.28em; color:var(--muted); text-decoration:none;
+  transition:color .3s; text-transform:uppercase;
+}
+.f-nav a:hover { color:var(--gold); }
+.f-copy {
+  font-family:var(--ff-title); font-size:.4rem;
+  letter-spacing:.25em; color:rgba(122,112,96,.4);
+}
+
+/* ═══ DESKTOP ═══ */
+@media(min-width:768px) {
+  #nav { padding:26px 60px; }
+  #nav.s { padding:17px 60px; }
+  .n-links { display:flex; }
+  .n-logo-name { font-size:.95rem; }
+  
+
+  .hero-content { padding:0 60px 90px; max-width:760px; }
+  .hero-actions { flex-direction:row; }
+  .btn-fill, .btn-ghost { width:auto; }
+
+  .intro { padding:120px 60px; }
+  .intro-img { aspect-ratio:21/8; }
+  .intro-cols {
+    grid-template-columns:1fr 1px 1fr; gap:0;
+  }
+  .intro-rule { display:block; }
+  .intro-cols > div:first-child { padding-right:64px; }
+  .intro-cols > div:last-child { padding-left:64px; }
+
+  .gallery { grid-template-columns:repeat(4,1fr); }
+
+  .exp-section { padding:120px 60px; }
+  .exp-grid { grid-template-columns:repeat(4,1fr); }
+
+  .rodizio-inner {
+    grid-template-columns:1fr 1fr; gap:80px; padding:120px 60px;
+    align-items:center;
+  }
+
+  .info-section { padding:120px 60px; }
+  .hours-blocks { grid-template-columns:repeat(2,1fr); }
+  .contact-grid { grid-template-columns:repeat(4,1fr); }
+
+  .map-section { display:grid; grid-template-columns:1fr 1fr; }
+  .map-wrap { height:100%; min-height:380px; }
+  .map-info { padding:80px 64px; }
+
+  footer { padding:64px 60px 44px; }
+  .f-bottom { display:flex; justify-content:space-between; align-items:center; }
+}
+
+  /* ═══════════════════════════════
+     RESERVATION MODAL
+  ═══════════════════════════════ */
+  .res-modal-bg {
+    display:none; position:fixed; inset:0; z-index:2000;
+    background:rgba(4,4,4,0.92); backdrop-filter:blur(12px);
+    align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .res-modal-bg.open { display:flex; }
+  .res-modal {
+    background:var(--dark);
+    border:1px solid var(--line);
+    max-width:560px; width:100%;
+    max-height:90svh; overflow-y:auto;
+    position:relative;
+    animation:modalIn .4s cubic-bezier(.16,1,.3,1) both;
+  }
+  @keyframes modalIn {
+    from { opacity:0; transform:translateY(24px) scale(.97); }
+    to   { opacity:1; transform:none; }
+  }
+  .res-modal-header {
+    padding:36px 36px 0;
+    border-bottom:1px solid var(--line);
+    padding-bottom:28px;
+    margin-bottom:0;
+    position:relative;
+  }
+  .res-modal-close {
+    position:absolute; top:22px; right:24px;
+    background:none; border:none; color:var(--muted);
+    font-size:1.4rem; cursor:pointer; line-height:1;
+    transition:color .2s;
+    font-family:var(--ff-body);
+  }
+  .res-modal-close:hover { color:var(--gold); }
+  .res-modal-tag {
+    font-family:var(--ff-title); font-size:.45rem;
+    letter-spacing:.5em; color:var(--gold);
+    text-transform:uppercase; display:block; margin-bottom:10px;
+  }
+  .res-modal-title {
+    font-family:var(--ff-title);
+    font-size:1.5rem; font-weight:400; color:var(--text);
+    margin-bottom:6px;
+  }
+  .res-modal-sub {
+    font-family:var(--ff-body); font-size:.95rem;
+    color:var(--muted); font-weight:300;
+  }
+  .res-modal-body { padding:32px 36px 36px; }
+  .res-form { display:flex; flex-direction:column; gap:18px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-group { display:flex; flex-direction:column; gap:7px; }
+  .form-group.full { grid-column:1/-1; }
+  .form-label {
+    font-family:var(--ff-title); font-size:.42rem;
+    letter-spacing:.35em; color:var(--muted); text-transform:uppercase;
+  }
+  .form-input, .form-select, .form-textarea {
+    background:var(--panel); border:1px solid var(--line);
+    color:var(--text); font-family:var(--ff-body);
+    font-size:1rem; font-weight:300;
+    padding:13px 16px; outline:none;
+    transition:border-color .3s;
+    -webkit-appearance:none; appearance:none;
+    border-radius:0;
+    width:100%;
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color:var(--muted); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color:var(--gold);
+  }
+  .form-select {
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C4A24A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 16px center;
+    padding-right:40px; cursor:pointer;
+  }
+  .form-select option { background:var(--dark); }
+  .form-textarea { resize:none; height:88px; }
+  .form-divider {
+    height:1px; background:var(--line); margin:4px 0;
+  }
+  .form-info {
+    font-family:var(--ff-body); font-size:.88rem;
+    color:var(--muted); font-weight:300; line-height:1.6;
+    display:flex; align-items:flex-start; gap:10px;
+  }
+  .form-info-bar {
+    width:2px; min-height:36px; background:var(--gold);
+    opacity:.35; flex-shrink:0; margin-top:2px;
+  }
+  .form-submit {
+    width:100%; background:var(--gold); border:none;
+    font-family:var(--ff-title); font-size:.55rem;
+    letter-spacing:.28em; color:var(--black);
+    padding:18px; cursor:pointer; text-transform:uppercase;
+    transition:background .3s;
+    display:flex; align-items:center; justify-content:center; gap:12px;
+  }
+  .form-submit:hover { background:var(--gold-light); }
+  .form-submit:disabled { opacity:.5; cursor:not-allowed; }
+  .form-submit-arrow { font-size:.9rem; transition:transform .3s; }
+  .form-submit:hover .form-submit-arrow { transform:translateX(4px); }
+  /* Success state */
+  .res-success {
+    display:none; text-align:center;
+    padding:48px 36px;
+  }
+  .res-success.show { display:block; }
+  .res-form.hide { display:none; }
+  .success-mark {
+    width:60px; height:60px; border-radius:50%;
+    border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 24px;
+    font-size:1.4rem; color:var(--gold);
+  }
+  .success-title {
+    font-family:var(--ff-title); font-size:1.2rem;
+    color:var(--text); margin-bottom:12px;
+  }
+  .success-body {
+    font-family:var(--ff-body); font-size:1rem;
+    color:var(--muted); line-height:1.8; font-weight:300;
+    margin-bottom:28px;
+  }
+  .success-phone {
+    font-family:var(--ff-body); font-size:1.15rem;
+    color:var(--gold); text-decoration:none;
+    border-bottom:1px solid rgba(196,162,74,.3); padding-bottom:2px;
+  }
+  @media(max-width:600px) {
+    .res-modal-header { padding:28px 24px 22px; }
+    .res-modal-body { padding:24px 24px 28px; }
+    .form-row { grid-template-columns:1fr; }
+    .res-modal-title { font-size:1.2rem; }
+  }
+
+
+  /* ═══════ SCROLL INTERACTIONS ═══════ */
+  #scroll-line {
+    position:fixed; top:0; left:0; height:2px; z-index:1000;
+    background:linear-gradient(90deg,var(--gold),var(--gold-light));
+    width:0%; pointer-events:none;
+  }
+  .clip-reveal {
+    clip-path:inset(100% 0 0 0);
+    transition:clip-path 1.2s cubic-bezier(.77,0,.18,1);
+  }
+  .clip-reveal.on { clip-path:inset(0% 0 0 0); }
+  .para-wrap { overflow:hidden; position:relative; }
+  .para-img  { will-change:transform; }
+  .slide-left  { opacity:0; transform:translateX(-52px);
+    transition:opacity .95s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1); }
+  .slide-right { opacity:0; transform:translateX( 52px);
+    transition:opacity .95s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1); }
+  .slide-left.on,.slide-right.on { opacity:1; transform:none; }
+  .line-draw { display:inline; position:relative; }
+  .line-draw::after {
+    content:''; position:absolute; bottom:-2px; left:0;
+    height:1px; background:var(--gold);
+    width:0%; transition:width 1.3s cubic-bezier(.77,0,.18,1) .5s;
+  }
+  .line-draw.on::after { width:100%; }
+  .scale-reveal {
+    opacity:0; transform:scale(.93) translateY(16px);
+    transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);
+  }
+  .scale-reveal.on { opacity:1; transform:none; }
+  .stagger > * {
+    opacity:0; transform:translateY(22px);
+    transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  .stagger.on > *:nth-child(1){opacity:1;transform:none;transition-delay:.00s}
+  .stagger.on > *:nth-child(2){opacity:1;transform:none;transition-delay:.11s}
+  .stagger.on > *:nth-child(3){opacity:1;transform:none;transition-delay:.22s}
+  .stagger.on > *:nth-child(4){opacity:1;transform:none;transition-delay:.33s}
+  .stagger.on > *:nth-child(5){opacity:1;transform:none;transition-delay:.44s}
+  .stagger.on > *:nth-child(6){opacity:1;transform:none;transition-delay:.55s}
+  .tilt { transform-style:preserve-3d; }
+  .g-item img {
+    transition:transform .8s cubic-bezier(.16,1,.3,1),filter .8s !important;
+  }
+  .g-item:hover img {
+    transform:scale(1.08) !important;
+    filter:brightness(1) saturate(1.05) !important;
+  }
+
+
+  /* ══ CUSTOM CALENDAR ══ */
+  .cal-input {
+    background:var(--panel); border:1px solid var(--line);
+    padding:13px 16px; display:flex; align-items:center;
+    justify-content:space-between; cursor:pointer;
+    transition:border-color .3s; user-select:none;
+  }
+  .cal-input:hover, .cal-input.open { border-color:var(--gold); }
+  .cal-input-text {
+    font-family:var(--ff-body); font-size:1rem;
+    font-weight:300; color:var(--muted);
+  }
+  .cal-input-text.chosen { color:var(--text); }
+  .cal-icon { color:var(--muted); flex-shrink:0; }
+  .cal-popup {
+    position:absolute; top:calc(100% + 6px); left:0; right:0;
+    background:var(--dark); border:1px solid var(--line);
+    z-index:500; padding:20px;
+    display:none; animation:calIn .25s cubic-bezier(.16,1,.3,1);
+    box-shadow:0 24px 60px rgba(0,0,0,.6);
+  }
+  .cal-popup.open { display:block; }
+  @keyframes calIn {
+    from { opacity:0; transform:translateY(-8px); }
+    to   { opacity:1; transform:none; }
+  }
+  .cal-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:18px;
+  }
+  .cal-month-year {
+    font-family:var(--ff-title); font-size:.62rem;
+    letter-spacing:.3em; color:var(--gold); text-transform:uppercase;
+  }
+  .cal-nav {
+    background:none; border:1px solid var(--line); color:var(--muted);
+    width:28px; height:28px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.9rem; transition:border-color .2s, color .2s;
+    font-family:var(--ff-body);
+  }
+  .cal-nav:hover { border-color:var(--gold); color:var(--gold); }
+  .cal-weekdays {
+    display:grid; grid-template-columns:repeat(7,1fr);
+    margin-bottom:8px;
+  }
+  .cal-weekdays span {
+    font-family:var(--ff-title); font-size:.38rem;
+    letter-spacing:.25em; color:var(--muted);
+    text-align:center; padding:4px 0;
+    text-transform:uppercase;
+  }
+  .cal-days {
+    display:grid; grid-template-columns:repeat(7,1fr);
+    gap:2px;
+  }
+  .cal-day {
+    aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+    font-family:var(--ff-body); font-size:.95rem; font-weight:300;
+    color:var(--text); cursor:pointer; border:1px solid transparent;
+    transition:border-color .2s, background .2s, color .2s;
+    position:relative;
+  }
+  .cal-day:hover:not(.disabled):not(.empty) {
+    border-color:rgba(196,162,74,.35);
+    color:var(--gold);
+  }
+  .cal-day.selected {
+    background:var(--gold); color:var(--black) !important;
+    border-color:var(--gold);
+    font-weight:500;
+  }
+  .cal-day.today:not(.selected) {
+    border-color:rgba(196,162,74,.3);
+    color:var(--gold);
+  }
+  .cal-day.disabled {
+    color:rgba(122,112,96,.3); cursor:not-allowed;
+  }
+  .cal-day.empty { cursor:default; }
+
+
+  /* ══ CUSTOM SCROLLBAR ══ */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--black);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--gold-dim, #7A6228);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #7A6228 #070707;
+  }
+
+
+  /* ══ LANGUAGE TOGGLE ══ */
+  .lang-toggle {
+    display:flex; align-items:center;
+    gap:0; flex-shrink:0;
+    border-radius:2px;
+    overflow:hidden;
+    border:1px solid rgba(196,162,74,.6);
+    background:linear-gradient(135deg, rgba(196,162,74,.18) 0%, rgba(196,162,74,.06) 100%);
+    backdrop-filter:blur(6px);
+  }
+  .lang-btn {
+    font-family:var(--ff-title); font-size:.44rem;
+    letter-spacing:.28em; padding:8px 13px;
+    background:none; border:none; cursor:pointer;
+    color:rgba(196,162,74,.7);
+    transition:background .25s, color .25s;
+    text-transform:uppercase;
+  }
+  .lang-btn.active {
+    background:var(--gold);
+    color:#000000;
+  }
+  .lang-btn:not(.active):hover {
+    color:var(--gold);
+    background:rgba(196,162,74,.1);
+  }
+
+
+  .lang-sep {
+    color:rgba(196,162,74,.35);
+    font-size:.5rem;
+    user-select:none;
+    line-height:1;
+  }
+
+
+  /* ══ PRICING ══ */
+  .pricing-section {
+    background:var(--black);
+    padding:90px 28px;
+    border-top:1px solid var(--line);
+  }
+  .pricing-inner {
+    max-width:900px; margin:0 auto;
+    text-align:center;
+  }
+  .pricing-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:3px;
+    margin:48px 0 32px;
+  }
+  .pricing-card {
+    background:var(--panel);
+    padding:32px 28px;
+    text-align:left;
+    position:relative;
+    transition:background .3s;
+  }
+  .pricing-card:hover { background:#171717; }
+  .pricing-card-top {
+    display:flex; justify-content:space-between;
+    align-items:flex-start; gap:16px;
+    margin-bottom:8px;
+  }
+  .pricing-card-label {
+    font-family:var(--ff-title); font-size:.58rem;
+    letter-spacing:.22em; color:var(--gold);
+    text-transform:uppercase; line-height:1.4;
+    flex:1;
+  }
+  .pricing-card-price {
+    font-family:var(--ff-body); font-size:2rem;
+    font-weight:300; color:var(--text);
+    line-height:1; white-space:nowrap;
+  }
+  .pricing-card-price sup {
+    font-size:.9rem; vertical-align:super;
+    font-family:var(--ff-title); font-size:.5rem;
+    letter-spacing:.1em;
+  }
+  .pricing-card-sub {
+    font-family:var(--ff-body); font-size:.88rem;
+    color:var(--muted); line-height:1.5; font-weight:300;
+  }
+  .pricing-card-accent {
+    position:absolute; top:0; left:0;
+    width:2px; height:100%;
+    background:linear-gradient(180deg, var(--gold), transparent);
+  }
+  .pricing-note {
+    font-family:var(--ff-body); font-style:italic;
+    font-size:.95rem; color:var(--muted);
+    letter-spacing:.02em; line-height:1.6;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    gap:10px;
+  }
+  .pricing-note::before, .pricing-note::after {
+    content:''; width:24px; height:1px;
+    background:var(--gold-dim, #7A6228); opacity:.5;
+    flex-shrink:0;
+  }
+  @media(min-width:768px) {
+    .pricing-section { padding:120px 60px; }
+    .pricing-grid { grid-template-columns:repeat(4,1fr); }
+    .pricing-card-price { font-size:2.2rem; }
+  }
+
+</style>
+</head>
+<body>
+<div id="scroll-line"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="n-logo">
+    <span class="n-logo-name">Kirin Sushi</span>
+    <span class="n-logo-loc">Vila Nova de Gaia</span>
+  </a>
+  <ul class="n-links">
+    <li><a href="#about" data-en="Story" data-pt="História">Story</a></li>
+    <li><a href="#gallery" data-en="Gallery" data-pt="Galeria">Gallery</a></li>
+    <li><a href="#rodizio" data-en="All You Can Eat" data-pt="Comer à Vontade" style="white-space:nowrap;">All You Can Eat</a></li>
+    <li><a href="#pricing" data-en="Pricing" data-pt="Preços">Pricing</a>
+    <li><a href="#reserve" data-en="Reserve" data-pt="Reservar">Reserve</a></li></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button><span class="lang-sep">|</span><button class="lang-btn" id="lang-pt" onclick="setLang('pt')">PT</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Japanese Fusion · Vila Nova de Gaia</div>
+    <h1 class="hero-h1">
+      <span>Kirin</span>Sushi
+    </h1>
+    <p class="hero-tagline" data-en="All you can eat, with a signature touch" data-pt="Comer à vontade, com um toque especial">All you can eat, with a signature touch</p>
+    <div class="hero-rule"></div>
+    <div class="hero-actions">
+      <a href="#" class="btn-fill" onclick="openRes();return false;" data-en="Reserve Your Table" data-pt="Reservar Mesa">Reserve Your Table</a>
+      <a href="#gallery" class="btn-ghost" data-en="View Gallery" data-pt="Ver Galeria">View Gallery</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-t">
+    <span class="m-item" data-en="All You Can Eat" data-pt="Comer à Vontade">All You Can Eat</span><span class="m-dot">·</span>
+    <span class="m-item" data-en="Japanese Fusion" data-pt="Fusão Japonesa">Japanese Fusion</span><span class="m-dot">·</span>
+    <span class="m-item" data-en="Rodizio Experience" data-pt="Experiência Rodízio">Rodizio Experience</span><span class="m-dot">·</span>
+    <span class="m-item">Vila Nova de Gaia</span><span class="m-dot">·</span>
+    <span class="m-item">Temaki · Sashimi · Nigiri</span><span class="m-dot">·</span>
+    <span class="m-item" data-en="Open Daily 12h – 15h &amp; 19h – 23h" data-pt="Aberto Diariamente 12h – 15h &amp; 19h – 23h">Open Daily 12h – 15h &amp; 19h – 23h</span><span class="m-dot">·</span>
+    <span class="m-item">All You Can Eat</span><span class="m-dot">·</span>
+    <span class="m-item">Japanese Fusion</span><span class="m-dot">·</span>
+    <span class="m-item">Rodizio Experience</span><span class="m-dot">·</span>
+    <span class="m-item">Vila Nova de Gaia</span><span class="m-dot">·</span>
+    <span class="m-item">Temaki · Sashimi · Nigiri</span><span class="m-dot">·</span>
+    <span class="m-item">Open Daily 12h – 15h &amp; 19h – 23h</span><span class="m-dot">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="intro">
+    <img src="images/img5.jpg" alt="Kirin Sushi Interior" class="intro-img para-img clip-reveal" data-para="0.25">
+    <div class="intro-cols">
+      <div class="slide-left">
+        <div class="tag" data-en="Our Story" data-pt="A Nossa História">Our Story</div>
+        <h2 class="h2" data-i18n="h-story">Where Japanese<br>tradition meets<br><em class="line-draw">signature craft</em></h2>
+        <p class="body-text" data-en="At Kirin Sushi, we believe exceptional Japanese cuisine should be experienced without limits. Every plate arrives as a small work of art — precise, generous, alive with flavour." data-pt="No Kirin Sushi, acreditamos que a cozinha japonesa de excelência deve ser vivida sem limites. Cada prato chega como uma pequena obra de arte — preciso, generoso, cheio de sabor.">At Kirin Sushi, we believe exceptional Japanese cuisine should be experienced without limits. Every plate arrives as a small work of art — precise, generous, alive with flavour.</p>
+        <p class="body-text" data-en="Born from a deep respect for Japanese culinary tradition and a bold creative spirit, Kirin is more than a restaurant. It is an experience, repeated and rediscovered with every visit." data-pt="Nascido do profundo respeito pela tradição culinária japonesa e de um espírito criativo arrojado, o Kirin é mais do que um restaurante. É uma experiência que se repete e redescobre a cada visita.">Born from a deep respect for Japanese culinary tradition and a bold creative spirit, Kirin is more than a restaurant. It is an experience, repeated and rediscovered with every visit.</p>
+      </div>
+      <div class="intro-rule"></div>
+      <div class="slide-right">
+        <div class="tag" data-en="The Space" data-pt="O Espaço">The Space</div>
+        <h2 class="h2" data-i18n="h-space">Designed for<br><em class="line-draw">atmosphere</em></h2>
+        <p class="body-text" data-en="Warm lanterns, dark timber screens, and intimate lighting create a space that feels both theatrical and inviting. A setting built to make the meal unforgettable." data-pt="Lanternas quentes, painéis de madeira escura e iluminação intimista criam um espaço ao mesmo tempo teatral e acolhedor. Um cenário feito para tornar a refeição inesquecível.">Warm lanterns, dark timber screens, and intimate lighting create a space that feels both theatrical and inviting. A setting built to make the meal unforgettable.</p>
+        <p class="body-text" data-en="Located in the heart of Vila Nova de Gaia, Kirin Sushi welcomes you every day for lunch and dinner — reservations recommended." data-pt="Localizado no coração de Vila Nova de Gaia, o Kirin Sushi recebe-o todos os dias ao almoço e ao jantar — reserva recomendada.">Located in the heart of Vila Nova de Gaia, Kirin Sushi welcomes you every day for lunch and dinner — reservations recommended.</p>
+        <div style="margin-top:32px">
+          <a href="tel:+351911128181" class="btn-fill" data-en="Reserve: +351 911 128 181" data-pt="Reservar: +351 911 128 181">Reserve: +351 911 128 181</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery">
+    <!-- row 1: tall | stack of 2 wide -->
+    <div class="g-item g-tall clip-reveal" data-delay="0">
+      <img src="images/img8.jpg" alt="Temaki on wood">
+      <span class="g-label">Temaki</span>
+    </div>
+    <div style="display:grid;grid-template-rows:1fr 1fr;gap:3px;">
+      <div class="g-item g-wide clip-reveal" data-delay="120">
+        <img src="images/img2.jpg" alt="Salmon sashimi">
+        <span class="g-label">Sashimi</span>
+      </div>
+      <div class="g-item g-wide clip-reveal" data-delay="240">
+        <img src="images/img6.jpg" alt="Bar">
+        <span class="g-label" data-en="The Bar" data-pt="O Bar">The Bar</span>
+      </div>
+    </div>
+    <!-- row 2: two square | tall -->
+    <div style="display:grid;grid-template-rows:1fr 1fr;gap:3px;">
+      <div class="g-item g-sq clip-reveal" data-delay="80">
+        <img src="images/img4.jpg" alt="Sushi roll with chopsticks">
+        <span class="g-label" data-en="Signature Rolls" data-pt="Rolls Especiais">Signature Rolls</span>
+      </div>
+      <div class="g-item g-sq clip-reveal" data-delay="200">
+        <img src="images/img7.jpg" alt="Roll held by chopsticks">
+        <span class="g-label">Kaitai</span>
+      </div>
+    </div>
+    <div class="g-item g-tall clip-reveal" data-delay="60">
+      <img src="images/img1.jpg" alt="Nigiri closeup">
+      <span class="g-label">Nigiri</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section>
+  <div class="exp-section">
+    <div class="tag reveal" data-en="The Experience" data-pt="A Experiência">The Experience</div>
+    <h2 class="h2 reveal d1" data-i18n="h-different">What makes<br>Kirin <em class="line-draw">different</em></h2>
+    <div class="exp-grid stagger">
+      <div class="exp-card tilt">
+        <span class="exp-card-num">01</span>
+        <span class="exp-card-title" data-en="Unlimited Rodizio" data-pt="Rodízio Ilimitado">Unlimited Rodizio</span>
+        <p class="exp-card-body" data-en="Order freely from the full menu, as many times as you like. No limits, no rush — just pure enjoyment of Japanese cuisine at its finest." data-pt="Peça livremente de todo o menu, quantas vezes quiser. Sem limites, sem pressa — apenas o puro prazer da cozinha japonesa no seu melhor.">Order freely from the full menu, as many times as you like. No limits, no rush — just pure enjoyment of Japanese cuisine at its finest.</p>
+      </div>
+      <div class="exp-card tilt">
+        <span class="exp-card-num">02</span>
+        <span class="exp-card-title" data-en="Signature Craft" data-pt="Arte Especial">Signature Craft</span>
+        <p class="exp-card-body" data-en="Each dish is prepared with care and precision. Premium ingredients, artistic plating, and bold flavour combinations define every plate." data-pt="Cada prato é preparado com cuidado e precisão. Ingredientes premium, apresentação artística e combinações de sabores arrojadas definem cada prato.">Each dish is prepared with care and precision. Premium ingredients, artistic plating, and bold flavour combinations define every plate.</p>
+      </div>
+      <div class="exp-card tilt">
+        <span class="exp-card-num">03</span>
+        <span class="exp-card-title" data-en="Immersive Atmosphere" data-pt="Atmosfera Imersiva">Immersive Atmosphere</span>
+        <p class="exp-card-body" data-en="A space designed to transport you — glowing lanterns, dark timber, intimate candlelight. The ambience is as carefully crafted as the food." data-pt="Um espaço desenhado para o transportar — lanternas luminosas, madeira escura, velas intimistas. O ambiente é tão cuidado quanto a comida.">A space designed to transport you — glowing lanterns, dark timber, intimate candlelight. The ambience is as carefully crafted as the food.</p>
+      </div>
+      <div class="exp-card tilt">
+        <span class="exp-card-num">04</span>
+        <span class="exp-card-title" data-en="Open Every Day" data-pt="Aberto Todos os Dias">Open Every Day</span>
+        <p class="exp-card-body" data-en="Lunch and dinner, seven days a week. Whether a quiet midday escape or a celebratory evening, Kirin is always ready to welcome you." data-pt="Almoço e jantar, sete dias por semana. Seja para uma pausa tranquila a meio do dia ou uma noite de celebração, o Kirin está sempre pronto para o receber.">Lunch and dinner, seven days a week. Whether a quiet midday escape or a celebratory evening, Kirin is always ready to welcome you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RODIZIO -->
+<section id="rodizio" class="rodizio-section">
+  <div class="rodizio-inner">
+    <div class="rodizio-img-wrap reveal">
+      <img src="images/img3.jpg" alt="All you can eat sushi" class="rodizio-img">
+      <div class="rodizio-img-caption">All you can eat, with a signature touch</div>
+    </div>
+    <div>
+      <div class="tag reveal" data-en="All You Can Eat" data-pt="Comer à Vontade">All You Can Eat</div>
+      <h2 class="h2 reveal d1" data-i18n="h-rodizio">Unlimited Japanese<br><em class="line-draw">all-you-can-eat</em></h2>
+      <p class="body-text reveal d1" data-en="Our rodizio brings the freedom to explore every corner of Japanese cuisine without restraint. Eat well. Eat often. Let the kitchen surprise you." data-pt="O nosso rodízio traz a liberdade de explorar cada canto da cozinha japonesa sem restrições. Coma bem. Coma muitas vezes. Deixe-se surpreender pela cozinha.">Our rodizio brings the freedom to explore every corner of Japanese cuisine without restraint. Eat well. Eat often. Let the kitchen surprise you.</p>
+      <div class="rodizio-features reveal d2">
+        <div class="rf"><span class="rf-num">—</span><span class="rf-text"><strong data-en="Unlimited ordering" data-pt="Pedidos ilimitados">Unlimited ordering</strong> <span data-en="from the full menu throughout your meal" data-pt="de todo o menu durante toda a refeição">from the full menu throughout your meal</span></span></div>
+        <div class="rf"><span class="rf-num">—</span><span class="rf-text"><strong data-en="Full menu access" data-pt="Acesso total ao menu">Full menu access</strong> <span data-en="— temaki, sushi, sashimi, hot dishes, desserts and more" data-pt="— temaki, sushi, sashimi, pratos quentes, sobremesas e muito mais">— temaki, sushi, sashimi, hot dishes, desserts and more</span></span></div>
+        <div class="rf"><span class="rf-num">—</span><span class="rf-text"><strong data-en="Available daily" data-pt="Disponível diariamente">Available daily</strong> <span data-en="— both lunch and dinner services, seven days a week" data-pt="— ao almoço e ao jantar, sete dias por semana">— both lunch and dinner services, seven days a week</span></span></div>
+        <div class="rf"><span class="rf-num">—</span><span class="rf-text"><strong data-en="Reservations recommended" data-pt="Reserva recomendada">Reservations recommended</strong> <span data-en="— book your table for the best experience" data-pt="— reserve a sua mesa para a melhor experiência">— book your table for the best experience</span></span></div>
+      </div>
+      <div style="margin-top:40px" class="reveal d3">
+        <a href="#" class="btn-fill" onclick="openRes();return false;" data-en="Book Your Table" data-pt="Reservar Mesa">Book Your Table</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS + CONTACT -->
+<section id="reserve">
+  <div class="info-section">
+    <div class="tag reveal" data-en="Visit Us" data-pt="Visite-nos">Visit Us</div>
+    <h2 class="h2 reveal d1" data-i18n="h-hours">Hours &amp; Reservations</h2>
+    <div class="hours-blocks reveal d2">
+      <div class="hour-block scale-reveal">
+        <div>
+          <span class="hour-service" data-en="Lunch" data-pt="Almoço">Lunch</span>
+          <span class="hour-days" style="margin-top:6px;display:block;" data-en="Monday — Sunday" data-pt="Segunda — Domingo">Monday — Sunday</span>
+        </div>
+        <span class="hour-time">12:00 — 15:00</span>
+      </div>
+      <div class="hour-block scale-reveal">
+        <div>
+          <span class="hour-service" data-en="Dinner" data-pt="Jantar">Dinner</span>
+          <span class="hour-days" style="margin-top:6px;display:block;">Monday — Sunday</span>
+        </div>
+        <span class="hour-time">19:00 — 23:00</span>
+      </div>
+    </div>
+    <div class="contact-grid stagger">
+      <div class="c-card">
+        <div class="c-card-bar"></div>
+        <div>
+          <span class="c-label" data-en="Address" data-pt="Morada">Address</span>
+          <span class="c-val">Avenida da República 1665<br>Vila Nova de Gaia</span>
+        </div>
+      </div>
+      <div class="c-card">
+        <div class="c-card-bar"></div>
+        <div>
+          <span class="c-label" data-en="Phone" data-pt="Telefone">Phone</span>
+          <span class="c-val"><a href="tel:+351911128181">+351 911 128 181</a></span>
+        </div>
+      </div>
+      <div class="c-card">
+        <div class="c-card-bar"></div>
+        <div>
+          <span class="c-label">Instagram</span>
+          <span class="c-val"><a href="https://www.instagram.com/kirinsushigaia" target="_blank">@kirinsushigaia</a></span>
+        </div>
+      </div>
+      <div class="c-card">
+        <div class="c-card-bar"></div>
+        <div>
+          <span class="c-label" data-en="Hours" data-pt="Horário">Hours</span>
+          <span class="c-val" data-en="Daily<br>12h–15h &amp; 19h–23h" data-pt="Diariamente<br>12h–15h &amp; 19h–23h">Daily<br>12h–15h &amp; 19h–23h</span>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="res-btn reveal d3" onclick="openRes();return false;">
+      <div class="res-btn-left">
+        <span class="res-btn-label" data-en="Reserve Your Table" data-pt="Reservar a Sua Mesa">Reserve Your Table</span>
+        <span class="res-btn-num">+351 911 128 181</span>
+      </div>
+      <span class="res-btn-arrow">&#8594;</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="tag reveal" style="justify-content:center;"
+         data-en="Pricing" data-pt="Preçário">Pricing</div>
+    <h2 class="h2 reveal d1" data-i18n="h-pricing"
+        style="text-align:center;">Our <em class="line-draw">prices</em></h2>
+    <div class="pricing-grid stagger">
+      <div class="pricing-card">
+        <div class="pricing-card-accent"></div>
+        <div class="pricing-card-top">
+          <span class="pricing-card-label"
+                data-en="Lunch&#10;Mon – Fri"
+                data-pt="Almoço&#10;Seg – Sex">Lunch<br>Mon – Fri</span>
+          <span class="pricing-card-price">21<sup>.95€</sup></span>
+        </div>
+        <p class="pricing-card-sub"
+           data-en="per person" data-pt="por pessoa">per person</p>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-accent"></div>
+        <div class="pricing-card-top">
+          <span class="pricing-card-label"
+                data-en="Dinner &amp;&#10;Weekends"
+                data-pt="Jantar &amp;&#10;Fins de Semana">Dinner &amp;<br>Weekends</span>
+          <span class="pricing-card-price">27<sup>.95€</sup></span>
+        </div>
+        <p class="pricing-card-sub"
+           data-en="per person" data-pt="por pessoa">per person</p>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-accent"></div>
+        <div class="pricing-card-top">
+          <span class="pricing-card-label"
+                data-en="Children&#10;Ages 3–9"
+                data-pt="Crianças&#10;3 aos 9 anos">Children<br>Ages 3–9</span>
+          <span class="pricing-card-price">9<sup>.95€</sup></span>
+        </div>
+        <p class="pricing-card-sub"
+           data-en="per child" data-pt="por criança">per child</p>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-accent"></div>
+        <div class="pricing-card-top">
+          <span class="pricing-card-label"
+                data-en="Children&#10;Holidays &amp; Weekends"
+                data-pt="Crianças&#10;Feriados &amp; Fim de Semana">Children<br>Holidays &amp; Weekends</span>
+          <span class="pricing-card-price">13<sup>.95€</sup></span>
+        </div>
+        <p class="pricing-card-sub"
+           data-en="per child" data-pt="por criança">per child</p>
+      </div>
+    </div>
+    <p class="pricing-note reveal"
+       data-en="Drinks and desserts not included."
+       data-pt="Bebidas e sobremesas não incluídas.">Drinks and desserts not included.</p>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="location" class="map-section">
+  <div class="map-wrap" style="position:relative;overflow:hidden;">
+    <img src="images/map.png" alt="Kirin Sushi location map"
+      style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+  </div>
+  <div class="map-info">
+    <div class="tag reveal" data-en="Location" data-pt="Localização">Location</div>
+    <h2 class="h2 reveal d1" data-i18n="h-location">Find us in<br>Vila Nova de Gaia</h2>
+    <p class="map-address reveal d2">
+      Avenida da República 1665<br>
+      Vila Nova de Gaia<br>
+      Portugal
+    </p>
+    <a href="https://maps.google.com/?q=Avenida+da+República+1665+Vila+Nova+de+Gaia" target="_blank" class="dir-link reveal d3">
+      Get Directions &nbsp;&#8594;
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-top">
+    <div class="f-wordmark">
+      <span class="f-wordmark-name">Kirin Sushi</span>
+      <span class="f-wordmark-rule"></span>
+      <span class="f-wordmark-sub">Vila Nova de Gaia &nbsp;·&nbsp; Portugal</span>
+    </div>
+  </div>
+  <div class="f-social">
+    <a href="https://www.instagram.com/kirinsushigaia" target="_blank" title="Instagram">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/KirinSushiGaia" target="_blank" title="Facebook">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+  <nav class="f-nav">
+    <a href="#about" data-en="Story" data-pt="História">Story</a>
+    <a href="#gallery" data-en="Gallery" data-pt="Galeria">Gallery</a>
+    <a href="#rodizio" data-en="All You Can Eat" data-pt="Comer à Vontade" style="white-space:nowrap;">All You Can Eat</a>
+    <a href="#reserve" data-en="Hours" data-pt="Horários">Hours</a>
+    <a href="#location" data-en="Location" data-pt="Localização">Location</a>
+    <a href="tel:+351911128181">+351 911 128 181</a>
+  </nav>
+  <p class="f-copy" data-en="© 2025 Kirin Sushi Bar · Vila Nova de Gaia · All rights reserved" data-pt="© 2025 Kirin Sushi Bar · Vila Nova de Gaia · Todos os direitos reservados">© 2025 Kirin Sushi Bar · Vila Nova de Gaia · All rights reserved</p>
+</footer>
+
+
+
+<!-- RESERVATION MODAL -->
+<div class="res-modal-bg" id="resModal" onclick="bgClose(event)">
+  <div class="res-modal" role="dialog" aria-modal="true" aria-label="Table Reservation">
+    <div class="res-modal-header">
+      <button class="res-modal-close" onclick="closeRes()" aria-label="Close">&#10005;</button>
+      <span class="res-modal-tag">Kirin Sushi · Vila Nova de Gaia</span>
+      <h2 class="res-modal-title" data-en="Reserve Your Table" data-pt="Reservar Mesa">Reserve Your Table</h2>
+      <p class="res-modal-sub" data-en="We look forward to welcoming you. Fill in the details below and we will confirm your reservation." data-pt="Estamos ansiosos por recebê-lo. Preencha os dados abaixo e confirmaremos a sua reserva.">We look forward to welcoming you. Fill in the details below and we will confirm your reservation.</p>
+    </div>
+    <div class="res-modal-body">
+      <div class="res-form" id="resForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="r-name" data-en="Full Name" data-pt="Nome Completo">Full Name</label>
+            <input class="form-input" id="r-name" type="text" placeholder="Your name" data-placeholder-en="Your name" data-placeholder-pt="O seu nome" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="r-phone" data-en="Phone Number" data-pt="Número de Telefone">Phone Number</label>
+            <input class="form-input" id="r-phone" type="tel" placeholder="+351 ..." autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group" style="position:relative;">
+            <label class="form-label" for="r-date-display" data-en="Date" data-pt="Data">Date</label>
+            <div class="cal-input" id="cal-trigger" onclick="toggleCal()">
+              <span id="r-date-display" class="cal-input-text" data-en="Select a date" data-pt="Selecionar data">Select a date</span>
+              <svg class="cal-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            </div>
+            <input type="hidden" id="r-date" value="">
+            <!-- Custom Calendar -->
+            <div class="cal-popup" id="cal-popup">
+              <div class="cal-header">
+                <button class="cal-nav" id="cal-prev" onclick="calNav(-1)">&#8592;</button>
+                <span class="cal-month-year" id="cal-month-year"></span>
+                <button class="cal-nav" id="cal-next" onclick="calNav(1)">&#8594;</button>
+              </div>
+              <div class="cal-weekdays">
+                <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+              </div>
+              <div class="cal-days" id="cal-days"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="r-service" data-en="Service" data-pt="Serviço">Service</label>
+            <select class="form-select" id="r-service">
+              <option value="" data-en="Select service" data-pt="Selecionar serviço">Select service</option>
+              <option value="lunch" data-en="Lunch — 12:00 to 15:00" data-pt="Almoço — 12:00 às 15:00">Lunch — 12:00 to 15:00</option>
+              <option value="dinner" data-en="Dinner — 19:00 to 23:00" data-pt="Jantar — 19:00 às 23:00">Dinner — 19:00 to 23:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="r-guests" data-en="Number of Guests" data-pt="Número de Pessoas">Number of Guests</label>
+            <select class="form-select" id="r-guests">
+              <option value="" data-en="Select guests" data-pt="Selecionar pessoas">Select guests</option>
+              <option>1 guest</option>
+              <option>2 guests</option>
+              <option>3 guests</option>
+              <option>4 guests</option>
+              <option>5 guests</option>
+              <option>6 guests</option>
+              <option>7 guests</option>
+              <option>8 guests</option>
+              <option>9 guests</option>
+              <option data-en="10+ guests" data-pt="10+ pessoas">10+ guests</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="r-email" data-en="Email (optional)" data-pt="Email (opcional)">Email (optional)</label>
+            <input class="form-input" id="r-email" type="email" placeholder="your@email.com" data-placeholder-en="your@email.com" data-placeholder-pt="o.seu@email.com" autocomplete="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="r-notes" data-en="Special Requests" data-pt="Pedidos Especiais">Special Requests</label>
+          <textarea class="form-textarea" id="r-notes" placeholder="Allergies, celebrations, seating preferences..." data-placeholder-en="Allergies, celebrations, seating preferences..." data-placeholder-pt="Alergias, celebrações, preferências de lugar..."></textarea>
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-info">
+          <div class="form-info-bar"></div>
+          <span data-en="Reservations are confirmed by phone. After submitting, our team will call you on the number provided to confirm your booking." data-pt="As reservas são confirmadas por telefone. Após o envio, a nossa equipa contactá-lo-á no número indicado para confirmar a sua reserva.">Reservations are confirmed by phone. After submitting, our team will call you on the number provided to confirm your booking.</span>
+        </div>
+        <button class="form-submit" id="resSubmit" onclick="submitRes()" data-en="Request Reservation" data-pt="Pedir Reserva">
+          Request Reservation
+          <span class="form-submit-arrow">&#8594;</span>
+        </button>
+      </div>
+      <div class="res-success" id="resSuccess">
+        <div class="success-mark">&#10003;</div>
+        <h3 class="success-title" data-en="Request Received" data-pt="Pedido Recebido">Request Received</h3>
+        <p class="success-body" data-en="Your reservation at Kirin Sushi is confirmed. Should anything change, our team will reach out to you directly." data-pt="A sua reserva no Kirin Sushi está confirmada. Caso haja alguma alteração, a nossa equipa entrará em contacto consigo diretamente.">Your reservation at Kirin Sushi is confirmed.<br>Should anything change, our team will reach out to you directly.</p>
+        <p class="success-body" style="margin-bottom:8px;font-size:.85rem;margin-top:20px;" data-en="Need immediate assistance?" data-pt="Precisa de ajuda imediata?">Need immediate assistance?</p>
+        <a href="tel:+351911128181" class="success-phone">+351 911 128 181</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  /* ── Scroll progress ── */
+  const scrollLine = document.getElementById('scroll-line');
+  function onScroll() {
+    const pct = scrollY / (document.body.scrollHeight - innerHeight) * 100;
+    scrollLine.style.width = Math.min(pct, 100) + '%';
+    nav.classList.toggle('s', scrollY > 50);
+
+    /* Hero parallax */
+    if (heroBg) heroBg.style.transform = 'translateY(' + (scrollY * 0.28).toFixed(1) + 'px)';
+
+    /* Gallery subtle parallax */
+    gImgs.forEach(img => {
+      const r = img.closest('.g-item').getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const shift = ((r.top + r.height/2) - innerHeight/2) * 0.1;
+      if (!img.parentElement.matches(':hover')) {
+        img.style.transform = 'translateY(' + shift.toFixed(1) + 'px)';
+      }
+    });
+
+    /* Intro image parallax */
+    paraImgs.forEach(img => {
+      const wrap = img.closest('.para-wrap');
+      if (!wrap) return;
+      const r = wrap.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const speed = parseFloat(img.dataset.para) || 0.2;
+      const shift = ((r.top + r.height/2) - innerHeight/2) * speed;
+      img.style.transform = 'translateY(' + shift.toFixed(1) + 'px)';
+    });
+
+    /* Rodizio image slow zoom */
+    if (rodImg) {
+      const r = rodImg.getBoundingClientRect();
+      const prog = (innerHeight - r.top) / (innerHeight + r.height);
+      const s = 1 + Math.max(0, Math.min(prog, 1)) * 0.05;
+      rodImg.style.transform = 'scale(' + s.toFixed(4) + ')';
+    }
+  }
+
+  const nav     = document.getElementById('nav');
+  const heroBg  = document.querySelector('.hero-bg');
+  const gImgs   = [...document.querySelectorAll('.g-item img')];
+  const paraImgs= [...document.querySelectorAll('.para-img[data-para]')];
+  const rodImg  = document.querySelector('.rodizio-img');
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ── Intersection observer ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
+      setTimeout(() => {
+        el.classList.add('on');
+        el.querySelectorAll('.line-draw').forEach(ld => {
+          setTimeout(() => ld.classList.add('on'), 400);
+        });
+      }, delay);
+      io.unobserve(el);
+    });
+  }, {threshold:0.08, rootMargin:'0px 0px -48px 0px'});
+
+  document.querySelectorAll(
+    '.reveal,.clip-reveal,.slide-left,.slide-right,.scale-reveal,.stagger,.line-draw'
+  ).forEach(el => io.observe(el));
+
+  /* ── 3D tilt on exp cards ── */
+  document.querySelectorAll('.tilt').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = 'perspective(700px) rotateX('+(-y*5).toFixed(2)+'deg) rotateY('+(x*5).toFixed(2)+'deg) scale(1.02)';
+    });
+    card.addEventListener('mouseleave', () => card.style.transform = '');
+  });
+
+
+  /* ── Custom Calendar ── */
+  let calDate = new Date();
+  calDate.setDate(1);
+  let calSelected = null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const MONTHS = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+
+  function renderCal() {
+    const y = calDate.getFullYear(), m = calDate.getMonth();
+    document.getElementById('cal-month-year').textContent = MONTHS[m] + ' ' + y;
+    const firstDay = new Date(y, m, 1).getDay(); // 0=Sun
+    const daysInMonth = new Date(y, m+1, 0).getDate();
+    const grid = document.getElementById('cal-days');
+    grid.innerHTML = '';
+    // Monday-first: shift Sunday(0) to 6
+    const startOffset = (firstDay === 0 ? 6 : firstDay - 1);
+    for (let i=0; i<startOffset; i++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day empty';
+      grid.appendChild(el);
+    }
+    for (let d=1; d<=daysInMonth; d++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day';
+      el.textContent = d;
+      const thisDate = new Date(y, m, d);
+      thisDate.setHours(0,0,0,0);
+      if (thisDate < today) {
+        el.classList.add('disabled');
+      } else {
+        if (calSelected && thisDate.toDateString() === calSelected.toDateString()) {
+          el.classList.add('selected');
+        }
+        if (thisDate.toDateString() === today.toDateString()) el.classList.add('today');
+        el.addEventListener('click', () => selectDay(y, m, d));
+      }
+      grid.appendChild(el);
+    }
+  }
+
+  function selectDay(y, m, d) {
+    calSelected = new Date(y, m, d);
+    const pad = n => String(n).padStart(2,'0');
+    const iso = y + '-' + pad(m+1) + '-' + pad(d);
+    document.getElementById('r-date').value = iso;
+    const display = pad(d) + ' ' + MONTHS[m].slice(0,3) + ' ' + y;
+    const txt = document.getElementById('r-date-display');
+    txt.textContent = display;
+    txt.classList.add('chosen');
+    document.getElementById('r-date').style.borderColor = '';
+    closeCal();
+    renderCal();
+  }
+
+  function toggleCal() {
+    const popup = document.getElementById('cal-popup');
+    const trigger = document.getElementById('cal-trigger');
+    const isOpen = popup.classList.contains('open');
+    if (isOpen) { closeCal(); }
+    else {
+      // Reset to current month or selected month
+      if (!calSelected) { calDate = new Date(); calDate.setDate(1); }
+      else { calDate = new Date(calSelected.getFullYear(), calSelected.getMonth(), 1); }
+      renderCal();
+      popup.classList.add('open');
+      trigger.classList.add('open');
+    }
+  }
+
+  function closeCal() {
+    document.getElementById('cal-popup').classList.remove('open');
+    document.getElementById('cal-trigger').classList.remove('open');
+  }
+
+  function calNav(dir) {
+    calDate.setMonth(calDate.getMonth() + dir);
+    renderCal();
+  }
+
+  // Close calendar when clicking outside
+  document.addEventListener('click', e => {
+    const popup = document.getElementById('cal-popup');
+    const trigger = document.getElementById('cal-trigger');
+    if (popup && !popup.contains(e.target) && !trigger.contains(e.target)) {
+      closeCal();
+    }
+  });
+
+
+
+  /* ── i18n map for complex headings ── */
+  const i18nMap = {
+    en: {
+      'h-story':     'Where Japanese<br>tradition meets<br><em class="line-draw on">signature craft</em>',
+      'h-space':     'Designed for<br><em class="line-draw on">atmosphere</em>',
+      'h-different': 'What makes<br>Kirin <em class="line-draw on">different</em>',
+      'h-rodizio':   'Unlimited Japanese<br><em class="line-draw on">all-you-can-eat</em>',
+      'h-hours':     'Hours &amp; Reservations',
+      'h-location':  'Find us in<br>Vila Nova de Gaia',
+      'h-pricing':   'Our <em class="line-draw on">prices</em>',
+    },
+    pt: {
+      'h-story':     'Onde a tradição<br>japonesa encontra<br><em class="line-draw on">o toque especial</em>',
+      'h-space':     'Criado para<br><em class="line-draw on">a atmosfera</em>',
+      'h-different': 'O que torna<br>o Kirin <em class="line-draw on">especial</em>',
+      'h-rodizio':   'Rodízio Japonês<br><em class="line-draw on">à vontade</em>',
+      'h-hours':     'Horários &amp; Reservas',
+      'h-location':  'Encontre-nos<br>em Vila Nova de Gaia',
+      'h-pricing':   'Os nossos <em class="line-draw on">preços</em>',
+    }
+  };
+
+  /* ── Language switcher ── */
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+
+    // Handle data-i18n headings
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      const val = (i18nMap[lang] || {})[key];
+      if (val) {
+        el.innerHTML = val;
+        // Re-animate line-draw
+        el.querySelectorAll('.line-draw').forEach(ld => {
+          ld.classList.remove('on');
+          setTimeout(() => ld.classList.add('on'), 500);
+        });
+      }
+    });
+    document.getElementById('lang-pt').classList.toggle('active', lang === 'pt');
+
+    // All elements with data-en / data-pt
+    document.querySelectorAll('[data-en], [data-pt]').forEach(el => {
+      const key = 'data-' + lang;
+      const val = el.getAttribute(key);
+      if (!val) return;
+
+      // Inputs & textareas: handle placeholders
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        const ph = el.getAttribute('data-placeholder-' + lang);
+        if (ph) el.placeholder = ph;
+        return;
+      }
+
+      // Select options
+      if (el.tagName === 'OPTION') {
+        el.textContent = val;
+        return;
+      }
+
+      // Everything else: use innerHTML (handles <br> and <em> in values)
+      el.innerHTML = val;
+
+      // Re-trigger line-draw on any em.line-draw inside
+      el.querySelectorAll('em.line-draw').forEach(ld => {
+        ld.classList.remove('on');
+        setTimeout(() => ld.classList.add('on'), 600);
+      });
+    });
+
+    // Calendar placeholder (special — not a normal input)
+    const displayEl = document.getElementById('r-date-display');
+    if (displayEl && !displayEl.classList.contains('chosen')) {
+      displayEl.textContent = lang === 'pt' ? 'Selecionar data' : 'Select a date';
+    }
+
+    // Guest options (1 guest / 1 pessoa etc.)
+    const guestSel = document.getElementById('r-guests');
+    if (guestSel) {
+      guestSel.querySelectorAll('option').forEach(opt => {
+        const raw = opt.textContent.replace(/[^0-9+]/g, '');
+        if (!raw) return;
+        opt.textContent = lang === 'pt'
+          ? (raw === '1' ? '1 pessoa' : raw + '+ pessoas')
+          : (raw === '1' ? '1 guest'  : raw + '+ guests');
+      });
+    }
+
+    // Marquee (duplicated items)
+    document.querySelectorAll('.marquee-t .m-item').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val) el.textContent = val;
+    });
+  }
+
+  /* ── Modal ── */
+  function openRes() {
+    document.getElementById('resModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    const d = new Date(), pad = n => String(n).padStart(2,'0');
+    document.getElementById('r-date').min = d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  }
+  function closeRes() {
+    document.getElementById('resModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function bgClose(e) { if (e.target===document.getElementById('resModal')) closeRes(); }
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeRes(); });
+
+  function submitRes() {
+    const v = id => document.getElementById(id).value.trim();
+    const fields = [['r-name',v('r-name')],['r-phone',v('r-phone')],
+                    ['r-date',v('r-date')],['r-service',v('r-service')],['r-guests',v('r-guests')]];
+    const invalid = fields.filter(([,val]) => !val);
+    if (invalid.length) {
+      invalid.forEach(([id]) => {
+        const el = document.getElementById(id);
+        el.style.borderColor = 'rgba(180,60,60,.7)';
+        el.addEventListener('input',  () => el.style.borderColor='', {once:true});
+        el.addEventListener('change', () => el.style.borderColor='', {once:true});
+      });
+      return;
+    }
+    const btn = document.getElementById('resSubmit');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    setTimeout(() => {
+      document.getElementById('resForm').classList.add('hide');
+      document.getElementById('resSuccess').classList.add('show');
+    }, 900);
+  }
+</script>
+</body>
+</html>
