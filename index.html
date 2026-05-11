@@ -68,7 +68,7 @@ body { background:var(--black); color:var(--text); font-family:var(--ff-body); o
 /* ─── HERO ─── */
 .hero {
   position:relative; width:100%; height:100svh; min-height:600px;
-  display:flex; align-items:flex-end; justify-content:flex-start;
+  display:flex; align-items:center; justify-content:center;
   overflow:hidden;
 }
 .hero-bg {
@@ -83,32 +83,35 @@ body { background:var(--black); color:var(--text); font-family:var(--ff-body); o
 }
 .hero-content {
   position:relative; z-index:2;
-  padding:0 28px 72px;
-  max-width:640px;
+  padding:0 28px;
+  max-width:900px; width:100%;
+  text-align:center;
+  display:flex; flex-direction:column; align-items:center;
   animation:up 1.4s cubic-bezier(.16,1,.3,1) both;
 }
 @keyframes up { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:none} }
 .hero-tag {
-  font-family:var(--ff-title); font-size:.48rem;
-  letter-spacing:.5em; color:var(--gold);
-  display:flex; align-items:center; gap:14px;
-  margin-bottom:20px;
+  font-family:var(--ff-title); font-size:.55rem;
+  letter-spacing:.55em; color:var(--gold);
+  display:flex; align-items:center; justify-content:center; gap:16px;
+  margin-bottom:28px;
 }
 .hero-tag::before { content:''; width:28px; height:1px; background:var(--gold); opacity:.6; }
 .hero-h1 {
   font-family:var(--ff-title);
-  font-size:clamp(3rem, 11vw, 7.5rem);
-  font-weight:400; letter-spacing:.06em; line-height:.95;
+  font-size:clamp(4.5rem, 16vw, 13rem);
+  font-weight:400; letter-spacing:.08em; line-height:.88;
   color:var(--text);
+  text-shadow:0 4px 60px rgba(0,0,0,.5);
 }
 .hero-h1 span { color:var(--gold); display:block; }
 .hero-tagline {
   font-family:var(--ff-body); font-style:italic;
-  font-size:clamp(1rem, 2.5vw, 1.35rem); font-weight:300;
-  color:rgba(234,226,208,.65); margin-top:18px; letter-spacing:.04em;
+  font-size:clamp(1.1rem, 2.8vw, 1.6rem); font-weight:300;
+  color:rgba(234,226,208,.75); margin-top:22px; letter-spacing:.06em;
 }
-.hero-rule { width:40px; height:1px; background:var(--gold); opacity:.5; margin:28px 0; }
-.hero-actions { display:flex; flex-direction:column; gap:12px; }
+.hero-rule { width:40px; height:1px; background:var(--gold); opacity:.5; margin:28px auto; }
+.hero-actions { display:flex; flex-direction:row; gap:14px; justify-content:center; flex-wrap:wrap; }
 .btn-fill {
   font-family:var(--ff-title); font-size:.52rem; letter-spacing:.22em;
   color:var(--black); background:var(--gold);
@@ -203,40 +206,56 @@ body { background:var(--black); color:var(--text); font-family:var(--ff-body); o
   margin:48px 0;
 }
 
-/* ─── GALLERY — full bleed grid ─── */
-.gallery {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:auto;
-  gap:3px;
-  background:var(--black);
-}
-.g-item {
-  position:relative; overflow:hidden;
-  background:var(--dark);
-}
-.g-item img {
-  width:100%; height:100%;
-  object-fit:cover; display:block;
-  transition:transform .7s cubic-bezier(.16,1,.3,1);
-  filter:brightness(.88) saturate(.92);
-}
-.g-item:hover img { transform:scale(1.05); }
-.g-tall { aspect-ratio:3/4; }
-.g-wide { aspect-ratio:4/3; }
-.g-sq   { aspect-ratio:1/1; }
-.g-label {
-  position:absolute; bottom:18px; left:20px;
-  font-family:var(--ff-body); font-style:italic;
-  font-size:.95rem; letter-spacing:.06em;
-  color:rgba(234,226,208,.75);
-  opacity:0; transform:translateY(6px);
-  transition:opacity .4s, transform .4s;
-  pointer-events:none;
-}
-.g-item:hover .g-label { opacity:1; transform:none; }
+/* ─── GALLERY ─── */
+  .gallery {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    gap:3px;
+    background:var(--black);
+  }
+  .g-col {
+    display:grid;
+    grid-template-rows:1fr 1fr;
+    gap:3px;
+  }
+  .g-item {
+    position:relative; overflow:hidden;
+    background:var(--dark);
+  }
+  .g-item:not(.g-tall) { aspect-ratio:1/1; }
+  .g-tall { aspect-ratio:1/2.02; }
+  .g-item img {
+    width:100%; height:100%;
+    object-fit:cover; display:block;
+    filter:brightness(.88) saturate(.92);
+    transition:transform .8s cubic-bezier(.16,1,.3,1), filter .8s;
+  }
+  .g-item:hover img {
+    transform:scale(1.06);
+    filter:brightness(1) saturate(1.05);
+  }
+  .g-label {
+    position:absolute; bottom:16px; left:18px;
+    font-family:var(--ff-body); font-style:italic;
+    font-size:.95rem; color:rgba(234,226,208,.85);
+    opacity:0; transform:translateY(6px);
+    transition:opacity .4s, transform .4s;
+    pointer-events:none; z-index:2;
+  }
+  .g-item::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 50%, rgba(7,7,7,.55) 100%);
+    z-index:1;
+  }
+  .g-item:hover .g-label { opacity:1; transform:none; }
+  @media(max-width:767px) {
+    .gallery { grid-template-columns:1fr 1fr; }
+    .g-tall { aspect-ratio:1/1; }
+    .g-col { grid-template-rows:auto; }
+    .g-item:not(.g-tall) { aspect-ratio:1/1; }
+  }
 
-/* ─── EXPERIENCE SECTION ─── */
+  /* ─── EXPERIENCE SECTION ─── */
 .exp-section {
   padding:90px 28px;
   max-width:1280px; margin:0 auto;
@@ -987,35 +1006,39 @@ footer {
 <!-- GALLERY -->
 <section id="gallery">
   <div class="gallery">
-    <!-- row 1: tall | stack of 2 wide -->
     <div class="g-item g-tall clip-reveal" data-delay="0">
-      <img src="images/img8.jpg" alt="Temaki on wood">
-      <span class="g-label">Temaki</span>
+      <img src="images/img1.jpg" alt="Nigiri closeup">
+      <span class="g-label">Nigiri</span>
     </div>
-    <div style="display:grid;grid-template-rows:1fr 1fr;gap:3px;">
-      <div class="g-item g-wide clip-reveal" data-delay="120">
+    <div class="g-col">
+      <div class="g-item clip-reveal" data-delay="120">
         <img src="images/img2.jpg" alt="Salmon sashimi">
         <span class="g-label">Sashimi</span>
       </div>
-      <div class="g-item g-wide clip-reveal" data-delay="240">
+      <div class="g-item clip-reveal" data-delay="240">
         <img src="images/img6.jpg" alt="Bar">
         <span class="g-label" data-en="The Bar" data-pt="O Bar">The Bar</span>
       </div>
     </div>
-    <!-- row 2: two square | tall -->
-    <div style="display:grid;grid-template-rows:1fr 1fr;gap:3px;">
-      <div class="g-item g-sq clip-reveal" data-delay="80">
-        <img src="images/img4.jpg" alt="Sushi roll with chopsticks">
-        <span class="g-label" data-en="Signature Rolls" data-pt="Rolls Especiais">Signature Rolls</span>
-      </div>
-      <div class="g-item g-sq clip-reveal" data-delay="200">
+    <div class="g-col">
+      <div class="g-item clip-reveal" data-delay="120">
         <img src="images/img7.jpg" alt="Roll held by chopsticks">
         <span class="g-label">Kaitai</span>
       </div>
+      <div class="g-item clip-reveal" data-delay="240">
+        <img src="images/img4.jpg" alt="Sushi roll with chopsticks">
+        <span class="g-label">Signature Rolls</span>
+      </div>
     </div>
-    <div class="g-item g-tall clip-reveal" data-delay="60">
-      <img src="images/img1.jpg" alt="Nigiri closeup">
-      <span class="g-label">Nigiri</span>
+    <div class="g-col">
+      <div class="g-item clip-reveal" data-delay="120">
+        <img src="images/img8.jpg" alt="Temaki on wood">
+        <span class="g-label">Temaki</span>
+      </div>
+      <div class="g-item clip-reveal" data-delay="240">
+        <img src="images/cake.jpg" alt="Dessert">
+        <span class="g-label" data-en="Dessert" data-pt="Sobremesa">Dessert</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1114,7 +1137,7 @@ footer {
         <div class="c-card-bar"></div>
         <div>
           <span class="c-label">Instagram</span>
-          <span class="c-val"><a href="https://www.instagram.com/kirinsushigaia" target="_blank">@kirinsushigaia</a></span>
+          <span class="c-val"><a href="https://www.instagram.com/kirinsushigaia?igsh=MXJrdmxseDB5cjVzeQ==" target="_blank">@kirinsushigaia</a></span>
         </div>
       </div>
       <div class="c-card">
@@ -1225,10 +1248,10 @@ footer {
     </div>
   </div>
   <div class="f-social">
-    <a href="https://www.instagram.com/kirinsushigaia" target="_blank" title="Instagram">
+    <a href="https://www.instagram.com/kirinsushigaia?igsh=MXJrdmxseDB5cjVzeQ==" target="_blank" title="Instagram">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
     </a>
-    <a href="https://www.facebook.com/KirinSushiGaia" target="_blank" title="Facebook">
+    <a href="https://www.facebook.com/people/Kirin-Sushi-Gaia/61574508873236/" target="_blank" title="Facebook">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
     </a>
   </div>
